@@ -15,13 +15,18 @@ next(I,I1) :- I1 = I+1, tick(I1), tick(I).
 cell(f(X,Y)) :- xcoo(X), ycoo(Y).
 %{ livecell(F) } :- cell(F).
 
+cell(f((xmax+1)*T+X,Y)) :- xcoo(X), ycoo(Y), tick(T).
+
+mark(f((xmax+1)+X,Y)) :- livecell(f(X,Y),1).
+
+
 %livecell(F1,tick) :- cell(F1).
 %deadcell(F1,tick) :- not livecell(F1,tick).
 %livecell(f(3,2),0).
 %livecell(f(3,3),0).
 %livecell(f(3,4),0).
 
-1 { livecell(F, 0) : cell(F) } 4.
+1 { livecell(F, 0) : cell(F) } 10.
 deadcell(F,0) :- cell(F), not livecell(F,0).
 %{deadcell(F,0)} :- cell(F), not livecell(F,0).
 
@@ -58,7 +63,10 @@ deadcell(F4,T1):- cell(F4), not livecell(F4,T2), next(T1,T2).
 %deadcell(F4,2) :- cell(F4), not livecell(F4,2).
 
    
-live(f(X1,Y1)) :- livecell(f(X1,Y1),0), livecell(f(X2,Y2),period), X1=X2, Y1=Y2.
+%live(f(X1,Y1)) :- livecell(f(X1,Y1),0), livecell(f(X2,Y2),period), X1=X2, Y1=Y2.
+
+live(f(X,Y)) :- livecell(f(X,Y),0), livecell(f(X,Y),period).
+
 
 %solved :- livecell(f(X,Y),2), live(f(X,Y)).
 
